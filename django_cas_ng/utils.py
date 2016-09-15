@@ -23,9 +23,12 @@ def get_redirect_url(request):
             next_ = django_settings.CAS_REDIRECT_URL
         else:
             next_ = request.META.get('HTTP_REFERER', django_settings.CAS_REDIRECT_URL)
-        prefix = urllib_parse.urlunparse(
-            (get_protocol(request), request.get_host(), '', '', '', ''),
-        )
+        if next_.startswith("http"):
+            prefix = next_
+        else:
+            prefix = urllib_parse.urlunparse(
+                (get_protocol(request), request.get_host(), '', '', '', ''),
+            )
         if next_.startswith(prefix):
             next_ = next_[len(prefix):]
     return next_
@@ -33,11 +36,13 @@ def get_redirect_url(request):
 
 def get_service_url(request, redirect_to=None):
     """Generates application django service URL for CAS"""
-    protocol = get_protocol(request)
-    host = request.get_host()
-    service = urllib_parse.urlunparse(
-        (protocol, host, request.path, '', '', ''),
-    )
+    service = getattr(settings, "CAS_SERVICE_URL", None)
+    if not service:
+        protocol = get_protocol(request)
+        host = request.get_host()
+        service = urllib_parse.urlunparse(
+            (protocol, host, request.path, '', '', ''),
+        )
     if '?' in service:
         service += '&'
     else:
