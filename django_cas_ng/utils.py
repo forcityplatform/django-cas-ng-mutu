@@ -36,7 +36,7 @@ def get_redirect_url(request):
 
 def get_service_url(request, redirect_to=None):
     """Generates application django service URL for CAS"""
-    service = getattr(settings, "CAS_SERVICE_URL", None)
+    service = django_settings.CAS_SERVICE_URL
     if not service:
         protocol = get_protocol(request)
         host = request.get_host()
