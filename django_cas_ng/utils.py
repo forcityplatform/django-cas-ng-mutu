@@ -23,14 +23,11 @@ def get_redirect_url(request):
             next_ = django_settings.CAS_REDIRECT_URL
         else:
             next_ = request.META.get('HTTP_REFERER', django_settings.CAS_REDIRECT_URL)
-        if next_.startswith("http"):
-            prefix = next_
-        else:
-            prefix = urllib_parse.urlunparse(
-                (get_protocol(request), request.get_host(), '', '', '', ''),
-            )
-        if next_.startswith(prefix):
-            next_ = next_[len(prefix):]
+    prefix = urllib_parse.urlunparse(
+        (get_protocol(request), request.get_host(), '', '', '', ''),
+    )
+    if next_.startswith(prefix):
+        next_ = next_[len(prefix):]
     return next_
 
 
