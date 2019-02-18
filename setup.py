@@ -34,9 +34,9 @@ setup(
     package_data = {
         'django_cas_ng': ['locale/*/LC_MESSAGES/*',],
     },
-    url='https://github.com/mingchen/django-cas-ng',
+    url='https://github.com/forcityplatform/django-cas-ng-mutu',
     #bugtrack_url='https://github.com/mingchen/django-cas-ng/issues',  # not support this key
-    download_url ='https://github.com/mingchen/django-cas-ng/releases',
+    download_url ='https://github.com/forcityplatform/django-cas-ng-mutu/releases',
     version='3.5.8-forcity-p1',
     install_requires=['python-cas==1.2.0'],
     zip_safe=False,  # dot not package as egg or django will not found management commands
